@@ -57,6 +57,7 @@ func (s *Server) router() http.Handler {
 	r.Route("/", func(r chi.Router) {
 		r.Get("/", handleIndex)
 		r.Mount("/products", s.productHandler())
+		r.Mount("/availability", s.availabilityHandler())
 	})
 	return r
 }
@@ -65,6 +66,13 @@ func (s *Server) productHandler() *productHandler {
 	h := newProductHandler()
 	h.baseURL = s.URL()
 	h.productService = s.ProductService
+	return h
+}
+
+func (s *Server) availabilityHandler() *availabilityHandler {
+	h := newAvailabilityHandler()
+	h.baseURL = s.URL()
+	h.availabilityService = s.AvailabilityService
 	return h
 }
 

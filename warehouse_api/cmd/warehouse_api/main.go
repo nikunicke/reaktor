@@ -21,6 +21,7 @@ func main() {
 	server := http.NewServer()
 	server.Addr = ":80"
 	server.ProductService = bad_api.NewProductService(client)
+	server.AvailabilityService = bad_api.NewAvailabilityService(client)
 	server.Open()
 
 	c := make(chan os.Signal, 1)
