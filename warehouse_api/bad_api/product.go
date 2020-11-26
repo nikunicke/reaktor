@@ -27,10 +27,10 @@ func (s *ProductService) GetProducts(
 		return nil, err
 	}
 	fmt.Println(resp)
-	return unmarshalResponse(resp)
+	return unmarshalProductResponse(resp)
 }
 
-func unmarshalResponse(
+func unmarshalProductResponse(
 	resp *http.Response) (warehouse_api.Products, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
