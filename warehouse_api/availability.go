@@ -2,6 +2,12 @@ package warehouse_api
 
 import "encoding/xml"
 
+type AvailabilityService interface {
+	GetAvailability(manufacturer string) (Availabilities, error)
+}
+
+type Availabilities []Availability
+
 type Availability struct {
 	ID          string
 	DataPayload []byte
