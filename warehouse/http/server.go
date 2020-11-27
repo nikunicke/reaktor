@@ -7,15 +7,15 @@ import (
 	"net/url"
 
 	"github.com/go-chi/chi"
-	"github.com/nikunicke/reaktor/warehouse_api"
+	"github.com/nikunicke/reaktor/warehouse"
 	"github.com/rs/cors"
 )
 
 type Server struct {
 	ln net.Listener
 
-	ProductService      warehouse_api.ProductService
-	AvailabilityService warehouse_api.AvailabilityService
+	ProductService      warehouse.ProductService
+	AvailabilityService warehouse.AvailabilityService
 	Addr                string
 	Recoverable         bool
 }

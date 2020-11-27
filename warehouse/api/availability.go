@@ -1,4 +1,4 @@
-package bad_api
+package api
 
 import (
 	"encoding/json"
@@ -6,10 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/nikunicke/reaktor/warehouse_api"
+	"github.com/nikunicke/reaktor/warehouse"
 )
 
-var _ warehouse_api.AvailabilityService = &AvailabilityService{}
+var _ warehouse.AvailabilityService = &AvailabilityService{}
 
 type AvailabilityService struct {
 	c *Client
@@ -20,7 +20,7 @@ func NewAvailabilityService(c *Client) *AvailabilityService {
 }
 
 func (s *AvailabilityService) GetAvailability(
-	manufacturer string) (*warehouse_api.Availability, error) {
+	manufacturer string) (*warehouse.Availability, error) {
 	resp, err := s.c.Get(manufacturer)
 	if err != nil {
 		return nil, err
@@ -30,13 +30,13 @@ func (s *AvailabilityService) GetAvailability(
 }
 
 func unmarshalAvailabilityResponse(
-	resp *http.Response) (*warehouse_api.Availability, error) {
+	resp *http.Response) (*warehouse.Availability, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	var availability warehouse_api.Availability
+	var availability warehouse.Availability
 	if err := json.Unmarshal(body, &availability); err != nil {
 		return nil, err
 	}

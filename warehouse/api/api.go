@@ -1,10 +1,10 @@
-package bad_api
+package api
 
 import (
 	"net/http"
 	"time"
 
-	"github.com/nikunicke/reaktor/warehouse_api/bad_api/options"
+	"github.com/nikunicke/reaktor/warehouse/api/options"
 )
 
 type Client struct {
@@ -30,7 +30,6 @@ func NewClient(opts ...*options.ClientOptions) (*Client, error) {
 }
 func (c *Client) Get(t string) (resp *http.Response, err error) {
 	url := c.o.URL.String() + t
-	// fmt.Println(url)
 	resp, err = c.c.Get(url)
 	return resp, err
 }

@@ -1,4 +1,4 @@
-package warehouse_api
+package warehouse
 
 import "encoding/xml"
 

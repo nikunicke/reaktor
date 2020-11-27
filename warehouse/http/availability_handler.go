@@ -9,13 +9,13 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
-	"github.com/nikunicke/reaktor/warehouse_api"
+	"github.com/nikunicke/reaktor/warehouse"
 )
 
 type availabilityHandler struct {
 	router              chi.Router
 	baseURL             url.URL
-	availabilityService warehouse_api.AvailabilityService
+	availabilityService warehouse.AvailabilityService
 }
 
 func newAvailabilityHandler() *availabilityHandler {

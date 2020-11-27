@@ -1,4 +1,4 @@
-package warehouse_api
+package warehouse
 
 type ProductService interface {
 	GetProducts(t string) (Products, error)
@@ -13,14 +13,29 @@ type Product struct {
 	Color        []string `json:"color"`
 	Price        int      `json:"price"`
 	Manufacturer string   `json:"manufacturer"`
+	Availability string   `json:"availability"`
 }
 
-// type ProductType string
+// ProductCategories list all product types
+var ProductCategories = [...]string{Jackets, Shirts, Accessories}
 
+// Defined product categoris
 const (
 	Jackets     = string("products/jackets")
 	Shirts      = string("products/shirts")
 	Accessories = string("products/accessories")
 )
 
-// func (t ProductType) String() string { return string(t) }
+// Product errors
+const (
+	ErrorInvalidCategory = Error("Invalid category")
+)
+
+// IsValidProductCategory checks if category exists
+func IsValidProductCategory(ctg string) error {
+	switch ctg {
+	case Jackets, Shirts, Accessories:
+		return nil
+	}
+	return ErrorInvalidCategory
+}

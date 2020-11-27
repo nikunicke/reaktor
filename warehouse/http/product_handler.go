@@ -9,7 +9,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
-	"github.com/nikunicke/reaktor/warehouse_api"
+	"github.com/nikunicke/reaktor/warehouse"
 )
 
 const cacheKey = string("productCache")
@@ -18,7 +18,7 @@ const cacheAge = string("max-age=300")
 type productHandler struct {
 	router         chi.Router
 	baseURL        url.URL
-	productService warehouse_api.ProductService
+	productService warehouse.ProductService
 }
 
 func newProductHandler() *productHandler {
