@@ -1,14 +1,12 @@
 package warehouse
 
-import "encoding/xml"
-
 type AvailabilityService interface {
 	GetAvailability(manufacturer string) (*Availability, error)
 }
 
 type Availability struct {
-	Code     int        `json:"code"`
-	Response []Response `json:"response"`
+	Code     int                   `json:"code"`
+	Response *AvailabilityResponse `json:"response"`
 }
 
 type Response struct {
@@ -16,7 +14,14 @@ type Response struct {
 	DataPayload string `json:"DATAPAYLOAD"`
 }
 
-type AvailabilityXML struct {
-	Availability xml.Name `xml:"AVAILABILITY"`
-	InStockValue string   `xml:"INSTOCKVALUE"`
+type AvailabilityResponse []Response
+
+type AvailabilityResponseMap map[string]string
+
+func (r AvailabilityResponse) Map() AvailabilityResponseMap {
+	availability := make(AvailabilityResponseMap)
+	for _, item := range r {
+		availability[item.ID] = item.DataPayload
+	}
+	return availability
 }
