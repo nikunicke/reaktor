@@ -21,11 +21,11 @@ func NewAvailabilityService(c *Client) *AvailabilityService {
 
 func (s *AvailabilityService) GetAvailability(
 	manufacturer string) (*warehouse.Availability, error) {
-	resp, err := s.c.Get(manufacturer)
+	prefix := "availability/"
+	resp, err := s.c.Get(prefix + manufacturer)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(resp)
 	return unmarshalAvailabilityResponse(resp)
 }
 
@@ -38,6 +38,7 @@ func unmarshalAvailabilityResponse(
 	defer resp.Body.Close()
 	var availability warehouse.Availability
 	if err := json.Unmarshal(body, &availability); err != nil {
+		fmt.Println("error here?")
 		return nil, err
 	}
 	return &availability, nil

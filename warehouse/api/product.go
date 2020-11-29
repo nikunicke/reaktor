@@ -2,7 +2,6 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -21,11 +20,11 @@ func NewProductService(c *Client) *ProductService {
 
 func (s *ProductService) GetProducts(
 	t string) (warehouse.Products, error) {
-	resp, err := s.c.Get(t)
+	prefix := "products/"
+	resp, err := s.c.Get(prefix + t)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(resp)
 	return unmarshalProductResponse(resp)
 }
 

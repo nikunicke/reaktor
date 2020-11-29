@@ -1,9 +1,11 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
+	"github.com/nikunicke/reaktor/warehouse"
 	"github.com/nikunicke/reaktor/warehouse/api/options"
 )
 
@@ -29,7 +31,13 @@ func NewClient(opts ...*options.ClientOptions) (*Client, error) {
 	return cli, nil
 }
 func (c *Client) Get(t string) (resp *http.Response, err error) {
+	fmt.Println("Requesting:", t)
 	url := c.o.URL.String() + t
 	resp, err = c.c.Get(url)
-	return resp, err
+	fmt.Println(resp.Header["X-Error-Modes-Active"])
+	e := resp.Header["X-Error-Modes-Active"]
+	if e[0] != "" {
+		return nil, warehouse.Error("Failed to request data from endpoint: " + t)
+	}
+	return resp, nil
 }
