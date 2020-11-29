@@ -16,6 +16,7 @@ type Server struct {
 
 	ProductService      warehouse.ProductService
 	AvailabilityService warehouse.AvailabilityService
+	WarehouseService    *warehouse.Warehouse
 	Addr                string
 	Recoverable         bool
 }
@@ -58,6 +59,7 @@ func (s *Server) router() http.Handler {
 		r.Get("/", handleIndex)
 		r.Mount("/products", s.productHandler())
 		r.Mount("/availability", s.availabilityHandler())
+		r.Mount("/warehouse", s.warehouseHandler())
 	})
 	return r
 }
@@ -73,6 +75,13 @@ func (s *Server) availabilityHandler() *availabilityHandler {
 	h := newAvailabilityHandler()
 	h.baseURL = s.URL()
 	h.availabilityService = s.AvailabilityService
+	return h
+}
+
+func (s *Server) warehouseHandler() *warehouseHandler {
+	h := newWarehouseHandler()
+	h.baseURL = s.URL()
+	h.warehouseService = s.WarehouseService
 	return h
 }
 
