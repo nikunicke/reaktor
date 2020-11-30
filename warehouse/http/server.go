@@ -53,7 +53,7 @@ func (s *Server) URL() url.URL {
 
 func (s *Server) router() http.Handler {
 	r := chi.NewRouter()
-	fileServer := http.FileServer(http.Dir("./warehouse/build/"))
+	fileServer := http.FileServer(http.Dir("../warehouse/build/"))
 	r.Use(cors.Default().Handler)
 	r.Route("/", func(r chi.Router) {
 		r.Handle("/*", fileServer)
