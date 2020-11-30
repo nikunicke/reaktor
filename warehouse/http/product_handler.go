@@ -35,7 +35,7 @@ func (h *productHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *productHandler) productIndex(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Request with category")
+	fmt.Fprintf(w, "Request with category: [ jackets, shirts, accessories ]")
 }
 
 func (h *productHandler) getAllProductsInCategory(
