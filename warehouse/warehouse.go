@@ -69,7 +69,6 @@ func (w *Warehouse) Update() error {
 
 	var i = 0
 	for m := range Manufacturers {
-		fmt.Println(i)
 		go func(i int, manufacturer string) {
 			var value AvailabilityResponseMap
 			var availability *Availability
