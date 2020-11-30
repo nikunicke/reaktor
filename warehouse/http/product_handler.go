@@ -41,23 +41,20 @@ func (h *productHandler) productIndex(w http.ResponseWriter, r *http.Request) {
 func (h *productHandler) getAllProductsInCategory(
 	w http.ResponseWriter, r *http.Request) {
 	if match := r.Header.Get("If-None-Match"); match != "" {
-		fmt.Println("match")
 		if strings.Contains(match, cacheKey) {
 			w.WriteHeader(http.StatusNotModified)
 			return
 		}
 	}
-
 	category := chi.URLParam(r, "category")
-	t := setCategory(category)
-	products, err := h.productService.GetProducts(t)
+	if err := warehouse.IsValidProductCategory(category); err != nil {
+		http.Error(w, err.Error()+": Available categories: [ jackets, shirts, accessories ]", 404)
+		return
+	}
+	products, err := h.productService.GetProducts(category)
 	if err != nil {
 		http.Error(w, err.Error(), 422)
 		return
 	}
 	render.JSON(w, r, products)
-}
-
-func setCategory(ctg string) string {
-	return "products/" + ctg
 }

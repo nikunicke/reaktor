@@ -14,11 +14,10 @@ import (
 type Server struct {
 	ln net.Listener
 
-	ProductService      warehouse.ProductService
-	AvailabilityService warehouse.AvailabilityService
-	WarehouseService    *warehouse.Warehouse
-	Addr                string
-	Recoverable         bool
+	ProductService   warehouse.ProductService
+	WarehouseService warehouse.WarehouseService
+	Addr             string
+	Recoverable      bool
 }
 
 func NewServer() *Server {
@@ -58,7 +57,6 @@ func (s *Server) router() http.Handler {
 	r.Route("/", func(r chi.Router) {
 		r.Get("/", handleIndex)
 		r.Mount("/products", s.productHandler())
-		r.Mount("/availability", s.availabilityHandler())
 		r.Mount("/warehouse", s.warehouseHandler())
 	})
 	return r
@@ -68,13 +66,6 @@ func (s *Server) productHandler() *productHandler {
 	h := newProductHandler()
 	h.baseURL = s.URL()
 	h.productService = s.ProductService
-	return h
-}
-
-func (s *Server) availabilityHandler() *availabilityHandler {
-	h := newAvailabilityHandler()
-	h.baseURL = s.URL()
-	h.availabilityService = s.AvailabilityService
 	return h
 }
 
