@@ -51,7 +51,7 @@ func main() {
 	}()
 
 	server := http.NewServer()
-	server.Addr = ":80"
+	server.Addr = ":8080"
 	server.WarehouseService = warehouseService
 	server.ProductService = warehouseService
 	server.Open()
