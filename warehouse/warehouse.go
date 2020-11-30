@@ -7,10 +7,6 @@ import (
 )
 
 type WarehouseService interface {
-	GetProducts(category string) (Products, error)
-}
-
-type WarehouseWorker interface {
 	Update() error
 }
 
@@ -47,7 +43,6 @@ func (w *Warehouse) Update() error {
 		go func(ctg string) {
 			products, err := w.ProductService.GetProducts(ctg)
 			if err != nil {
-				fmt.Println(err)
 				e <- err
 			}
 			for range Manufacturers {
@@ -71,13 +66,17 @@ func (w *Warehouse) Update() error {
 		go func(manufacturer string) {
 			availability, err := w.AvailabilityService.GetAvailability(manufacturer)
 			if err != nil {
-				fmt.Println(err)
 				for range ProductCategories {
 					e <- err
 				}
 			}
 			for range ProductCategories {
-				a <- availability.Response.Map()
+				time.Sleep(time.Second * 2)
+				value, err := availability.Response.Map()
+				if err != nil {
+					e <- err
+				}
+				a <- value
 			}
 		}(m)
 	}
@@ -85,7 +84,10 @@ func (w *Warehouse) Update() error {
 	for range ProductCategories {
 		select {
 		case err := <-e:
-			return err
+			{
+				fmt.Println("Update failed")
+				return err
+			}
 		case productData := <-p:
 			inventory[productData[0].Type] = productData
 		}
