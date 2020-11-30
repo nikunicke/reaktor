@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = "http://localhost:5000/products/accessories"
+const baseURL = "/products/accessories"
 
 const getAll = async () => {
     console.log(baseURL)
