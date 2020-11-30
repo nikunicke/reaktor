@@ -1,5 +1,9 @@
 package warehouse
 
+import (
+	"encoding/xml"
+)
+
 type AvailabilityService interface {
 	GetAvailability(manufacturer string) (*Availability, error)
 }
@@ -16,12 +20,21 @@ type Response struct {
 
 type AvailabilityResponse []Response
 
+type AvailabilityXML struct {
+	XMLName      xml.Name `xml:"AVAILABILITY"`
+	InStockValue string   `xml:"INSTOCKVALUE"`
+}
+
 type AvailabilityResponseMap map[string]string
 
-func (r AvailabilityResponse) Map() AvailabilityResponseMap {
+func (r AvailabilityResponse) Map() (AvailabilityResponseMap, error) {
 	availability := make(AvailabilityResponseMap)
+	var xmlData AvailabilityXML
 	for _, item := range r {
-		availability[item.ID] = item.DataPayload
+		if err := xml.Unmarshal([]byte(item.DataPayload), &xmlData); err != nil {
+			return nil, err
+		}
+		availability[item.ID] = xmlData.InStockValue
 	}
-	return availability
+	return availability, nil
 }
