@@ -9,8 +9,6 @@ const (
 	ErrorInvalidCategory = Error("Invalid category")
 )
 
-type Products []Product
-
 type Product struct {
 	ID           string   `json:"id"`
 	Type         string   `json:"type"`
@@ -20,6 +18,8 @@ type Product struct {
 	Manufacturer string   `json:"manufacturer"`
 	Availability string   `json:"availability"`
 }
+
+type Products []Product
 
 // ProductCategories list all product types
 var ProductCategories = []string{Jackets, Shirts, Accessories}
