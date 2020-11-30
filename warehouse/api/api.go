@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -31,10 +30,9 @@ func NewClient(opts ...*options.ClientOptions) (*Client, error) {
 	return cli, nil
 }
 func (c *Client) Get(t string) (resp *http.Response, err error) {
-	fmt.Println("Requesting:", t)
+	// fmt.Println("Requesting:", t)
 	url := c.o.URL.String() + t
 	resp, err = c.c.Get(url)
-	fmt.Println(resp.Header["X-Error-Modes-Active"])
 	e := resp.Header["X-Error-Modes-Active"]
 	if e[0] != "" {
 		return nil, warehouse.Error("Failed to request data from endpoint: " + t)
