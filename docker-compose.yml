@@ -5,3 +5,7 @@ services:
     ports:
       - 5000:80
 
+  client:
+    build: ./warehouse-client
+    ports:
+      - 5001:80
