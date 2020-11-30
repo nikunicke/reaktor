@@ -50,8 +50,12 @@ func main() {
 		}
 	}()
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = ":8080"
+	}
 	server := http.NewServer()
-	server.Addr = ":8080"
+	server.Addr = port
 	server.WarehouseService = warehouseService
 	server.ProductService = warehouseService
 	server.Open()
