@@ -59,7 +59,7 @@ func main() {
 	server.WarehouseService = warehouseService
 	server.ProductService = warehouseService
 	server.Open()
-	fmt.Println("Server running on port:", port)
+	fmt.Println("Server running on port:", server.URL())
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
