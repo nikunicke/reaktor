@@ -27,7 +27,7 @@ The warehouse consists of three domain types:
 * http
     * Implements a server that communicates with requests from the frontend
 
-These packages and types are put together in cmd/warehouse/main.
+These packages and types are put together in cmd/warehouse/main. Everything is put together to make it easy to add features and implementations according to the clients needs in the future.
 
 The backend is currently serving a static build of the react app. To run and serve on your system, simply run
 ```console
