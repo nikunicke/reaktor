@@ -52,13 +52,14 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = ":8080"
+		port = ":5000"
 	}
 	server := http.NewServer()
 	server.Addr = port
 	server.WarehouseService = warehouseService
 	server.ProductService = warehouseService
 	server.Open()
+	fmt.Println("Server running on port:", port)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
