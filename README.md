@@ -21,6 +21,14 @@ The warehouse consists of three domain types:
 * Availability
     * Represents the availability data. This type is split into other types in order to simplify parsing of xml fields.
 
+##### Packages
+* api
+    * Implements a client that communicates with the legacy APIs provided in the assignment
+* http
+    * Implements a server that communicates with requests from the frontend
+
+These packages and types are put together in cmd/warehouse/main.
+
 The backend is currently serving a static build of the react app. To run and serve on your system, simply run
 ```console
     docker-compose up
