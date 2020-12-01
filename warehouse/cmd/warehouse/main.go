@@ -55,7 +55,7 @@ func main() {
 		port = ":5000"
 	}
 	server := http.NewServer()
-	server.Addr = port
+	server.Addr = ":" + port
 	server.WarehouseService = warehouseService
 	server.ProductService = warehouseService
 	server.Open()
