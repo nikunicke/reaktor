@@ -33,7 +33,7 @@ The backend is currently serving a static build of the react app. To run and ser
 ```console
     docker-compose up
 ```
-Navigate to [localhost:5000](http://localhost:5000) or whichever $PORT you have set up in your env variables.
+Navigate to [localhost:5000](http://localhost:5000). If you wish to change the PORT to some env variable, remember to also reconfigure docker-compose.yml
 
 ### [Warehouse-client](https://github.com/nikunicke/reaktor/tree/master/warehouse-client) (frontend)
 
