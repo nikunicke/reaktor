@@ -33,8 +33,8 @@ func (c *Client) Get(t string) (resp *http.Response, err error) {
 	// fmt.Println("Requesting:", t)
 	url := c.o.URL.String() + t
 	resp, err = c.c.Get(url)
-	e := resp.Header["X-Error-Modes-Active"]
-	if e[0] != "" {
+	e := resp.Header.Get("X-Error-Modes-Active")
+	if e != "" {
 		return nil, warehouse.Error("Failed to request data from endpoint: " + t)
 	}
 	return resp, nil
